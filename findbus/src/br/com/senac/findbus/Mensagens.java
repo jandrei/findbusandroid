@@ -1,4 +1,4 @@
-package com.example.findbus;
+package br.com.senac.findbus;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class Mensagens {
 	 *            - Texto a ser exibido no alert Dialog
 	 */
 	public static void ExibeMensagemAlert(Context contexto, String texto) {
-		ExibeMensagemAlert(contexto, "Aten��o", texto);
+		ExibeMensagemAlert(contexto, "Atenção", texto);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class Mensagens {
 		builder.setMessage(pergunta);
 		builder.setCancelable(false);
 		builder.setPositiveButton("Sim", eventoSim);
-		builder.setNegativeButton("N�o", eventoNao);
+		builder.setNegativeButton("Não", eventoNao);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

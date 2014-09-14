@@ -1,5 +1,6 @@
-package com.example.findbus;
+package br.com.senac.findbus;
 
+import br.com.senac.findbus.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,8 +36,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				try {
 					if (android.os.Build.VERSION.SDK_INT > 9) {
-						StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-								.permitAll().build();
+						StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()								.permitAll().build();
 						StrictMode.setThreadPolicy(policy);
 					}
 

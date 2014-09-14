@@ -1,4 +1,4 @@
-package com.example.findbus;
+package br.com.senac.findbus;
 
 import java.io.IOException;
 
