@@ -9,17 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.senac.findbus.MainActivity" >
 
-    <Button
-        android:id="@+id/botao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="@string/ache_bus"
-        android:text="@string/vai" />
-
     <TextView
         android:id="@+id/texto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ache_bus" />
+
+    <Button
+        android:id="@+id/botao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vai" />
+    
+     <TextView
+        android:id="@+id/texto2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
 
 </LinearLayout>
