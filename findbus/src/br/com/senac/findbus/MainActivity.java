@@ -2,16 +2,9 @@ package br.com.senac.findbus;
 
 import br.com.senac.findbus.R;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -19,37 +12,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		TextView campo = (TextView) findViewById(R.id.teste);
-
-		String IMEI = "";
-
-		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		IMEI = telephonyManager.getDeviceId();
-		campo.setText(IMEI);
-
-		Button botao = (Button) findViewById(R.id.botao);
-
-		botao.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				try {
-					if (android.os.Build.VERSION.SDK_INT > 9) {
-						StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()								.permitAll().build();
-						StrictMode.setThreadPolicy(policy);
-					}
-
-					String resposta = new SynchronousHttpConnection()
-							.get("http://10.179.169.213:8080/findbusweb/webservice/r/agencys");
-
-					Mensagens.ExibeMensagemAlert(v.getContext(), resposta);
-
-				} catch (Exception e) {
-					Mensagens.ExibeExceptionAlert(v.getContext(), e);
-				}
-			}
-		});
+	
 
 	}
 

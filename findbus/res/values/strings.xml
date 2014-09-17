@@ -4,8 +4,6 @@
     <string name="app_name">FindBus</string>
     <string name="ache_bus">Ache seu ônibus aqui!</string>
     <string name="action_settings">Settings</string>
-    <string name="vai">VAI</string>
-    <string name="action_search">Pesquisa</string>
-    
+    <string name="vai">VAI</string>    
 
 </resources>
