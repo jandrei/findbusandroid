@@ -15,14 +15,12 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	StopDAO stopDao;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		stopDao = StopDAO.getInstance(getApplication());
+		final StopDAO stopDao = StopDAO.getInstance(getApplication());
 
 		final TextView texto2 = (TextView) findViewById(R.id.texto2);
 		Button botao = (Button) findViewById(R.id.botao);
@@ -31,25 +29,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				texto2.setText("Ainda em desenvolvimento");
 
-				try {
-					if (android.os.Build.VERSION.SDK_INT > 9) {
-						StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-								.permitAll().build();
-						StrictMode.setThreadPolicy(policy);
-					}
-
-					String resposta = new SynchronousHttpConnection()
-							.get("http://ec2-54-200-87-69.us-west-2.compute.amazonaws.com:8080/findbusweb/webservice/r/stops");
-
-					stopDao.importarListaJson(resposta);
-					List<StopED> stops = stopDao.listarTodos();
-
-					Mensagens.ExibeMensagemAlert(v.getContext(),
-							"Tamanho da lista = " + stops.size());
-
-				} catch (Exception e) {
-					Mensagens.ExibeExceptionAlert(v.getContext(), e);
-				}
+				stopDao.importarFromWS(v.getContext());
 			}
 
 		});

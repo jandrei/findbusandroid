@@ -6,6 +6,10 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.StrictMode;
+import br.com.senac.findbus.Constantes;
+import br.com.senac.findbus.Mensagens;
+import br.com.senac.findbus.SynchronousHttpConnection;
 import br.com.senac.findbus.model.StopED;
 
 import com.google.gson.Gson;
@@ -59,14 +63,33 @@ public class StopDAO extends CustomDAO<StopED> {
 		return obj;
 	}
 
-	public List<StopED> importarListaJson(String json) {
+	public void importarFromWS(Context ctx) {
+		try {
+			if (android.os.Build.VERSION.SDK_INT > 9) {
+				StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+				StrictMode.setThreadPolicy(policy);
+			}
+
+			String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
+
+			List<StopED> stops = importarListaJson(resposta);
+
+			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size());
+
+		} catch (Exception e) {
+			Mensagens.ExibeExceptionAlert(ctx, e);
+		}
+	}
+
+	private List<StopED> importarListaJson(String json) {
 		limparTabela();
-		
+
 		StopED[] listaStopEd = new Gson().fromJson(json, StopED[].class);
 		for (StopED stopED : listaStopEd) {
 			salvar(stopED);
 		}
-		
+
 		return Arrays.asList(listaStopEd);
 	}
+
 }
