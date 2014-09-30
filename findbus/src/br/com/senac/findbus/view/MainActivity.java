@@ -1,21 +1,16 @@
 package br.com.senac.findbus.view;
 
-import java.util.List;
-
-import br.com.senac.findbus.R;
-import br.com.senac.findbus.R.id;
-import br.com.senac.findbus.R.layout;
-import br.com.senac.findbus.R.menu;
-import br.com.senac.findbus.dao.StopDAO;
-import br.com.senac.findbus.model.StopED;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import br.com.senac.findbus.Mensagens;
+import br.com.senac.findbus.R;
+import br.com.senac.findbus.dao.StopDAO;
 
 public class MainActivity extends Activity {
 
@@ -57,5 +52,14 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void btnChamaTelaExemplo1(View v) {
+		try {
+			startActivity(new Intent(this, ExemploTela1.class));
+		} catch (Exception e) {
+			Mensagens.ExibeExceptionAlert(v.getContext(), e);
+		}
+
 	}
 }

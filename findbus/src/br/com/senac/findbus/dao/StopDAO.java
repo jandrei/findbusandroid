@@ -70,17 +70,21 @@ public class StopDAO extends CustomDAO<StopED> {
 				StrictMode.setThreadPolicy(policy);
 			}
 
-			String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
+			List<StopED> stops = listarTodos();
 
-			List<StopED> stops = importarListaJson(resposta);
-			String mensagem = "";
+			if (stops == null || stops.isEmpty()) {
+				String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
+				stops = importarListaJson(resposta);
+			}
 			
+			String mensagem = "";
+
 			for (int i = 0; i < 10; i++) {
 				StopED ed = stops.get(i);
-				mensagem +=ed.getStopId()+"|"+ ed.getStopLat()+"|"+ed.getStopLon()+"\n";
+				mensagem += ed.getStopId() + "|" + ed.getStopLat() + "|" + ed.getStopLon() + "\n";
 			}
 
-			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size()+"\n"+mensagem);
+			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size() + "\n" + mensagem);
 
 		} catch (Exception e) {
 			Mensagens.ExibeExceptionAlert(ctx, e);
