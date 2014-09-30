@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -77,7 +78,14 @@ public class PesquisaStops extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					StopED ed = stops.get(position);
-					Mensagens.ExibeMensagemAlert(view.getContext(), ed.getStopName() + "\n" + ed.getStopLat() + "\n" + ed.getStopLon());
+
+					try {
+						Intent in = new Intent(PesquisaStops.this, ExemploTela1.class);
+						in.putExtra("stopED", ed);
+						startActivity(in);
+					} catch (Exception e) {
+						Mensagens.ExibeExceptionAlert(PesquisaStops.this, e);
+					}
 				}
 			});
 
@@ -85,4 +93,5 @@ public class PesquisaStops extends Activity {
 			Mensagens.ExibeExceptionAlert(this, e);
 		}
 	}
+
 }
