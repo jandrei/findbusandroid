@@ -90,6 +90,10 @@ public abstract class CustomDAO<T extends CustomED> {
 	public String getFiltroListar(T obj){
 		return "";
 	}
+	
+	public String getOrderBy(){
+		return null;
+	}
 
 	public List<T> listar(T obj) {
 		
@@ -101,7 +105,7 @@ public abstract class CustomDAO<T extends CustomED> {
 			filtro += getFiltroListar(obj);
 		}
 		
-		Cursor c = db.query(getNomeTabela(), null, filtro, null, null, null, null);
+		Cursor c = db.query(getNomeTabela(), null, filtro, null, null, null, getOrderBy());
 		try {
 
 			List<T> lista = new ArrayList<T>();

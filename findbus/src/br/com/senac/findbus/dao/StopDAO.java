@@ -75,6 +75,11 @@ public class StopDAO extends CustomDAO<StopED> {
 
 		return filtro;
 	}
+	
+	@Override
+	public String getOrderBy() {
+		return "stop_name,stop_id";
+	}
 
 	public void importarFromWS(Context ctx) {
 		try {
@@ -84,13 +89,11 @@ public class StopDAO extends CustomDAO<StopED> {
 			}
 
 			StopED pesqStop = new StopED();
-			
-			
 			List<StopED> stops = listar(pesqStop);
 
 			if (stops == null || stops.isEmpty()) {
-				//String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
-				//stops = importarListaJson(resposta);
+				String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
+				stops = importarListaJson(resposta);
 			}
 
 			String mensagem = "";

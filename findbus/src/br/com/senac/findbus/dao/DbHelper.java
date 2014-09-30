@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
 
 	public DbHelper(Context ctx) {
-		super(ctx, "findbusweb.db", null, 6);
+		super(ctx, "findbusweb.db", null, 7);
 	}
 
 	@Override

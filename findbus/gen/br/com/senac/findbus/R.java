@@ -36,8 +36,8 @@ public final class R {
         public static final int linearLayout5=0x7f080005;
         public static final int listaStops=0x7f080011;
         public static final int map=0x7f080003;
-        public static final int rbCodigo=0x7f080008;
-        public static final int rbNome=0x7f080009;
+        public static final int rbCodigo=0x7f080009;
+        public static final int rbNome=0x7f080008;
         public static final int rgPesquisar=0x7f080007;
         public static final int texto=0x7f080000;
         public static final int texto2=0x7f080002;
@@ -85,9 +85,8 @@ public final class R {
          */
         public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
-        public static final int cima=0x7f060002;
+        public static final int fundoPadrao=0x7f060002;
     }
 }
