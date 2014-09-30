@@ -73,8 +73,14 @@ public class StopDAO extends CustomDAO<StopED> {
 			String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
 
 			List<StopED> stops = importarListaJson(resposta);
+			String mensagem = "";
+			
+			for (int i = 0; i < 10; i++) {
+				StopED ed = stops.get(i);
+				mensagem +=ed.getStopId()+"|"+ ed.getStopLat()+"|"+ed.getStopLon()+"\n";
+			}
 
-			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size());
+			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size()+"\n"+mensagem);
 
 		} catch (Exception e) {
 			Mensagens.ExibeExceptionAlert(ctx, e);

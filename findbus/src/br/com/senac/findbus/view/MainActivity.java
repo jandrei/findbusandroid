@@ -1,7 +1,11 @@
-package br.com.senac.findbus;
+package br.com.senac.findbus.view;
 
 import java.util.List;
 
+import br.com.senac.findbus.R;
+import br.com.senac.findbus.R.id;
+import br.com.senac.findbus.R.layout;
+import br.com.senac.findbus.R.menu;
 import br.com.senac.findbus.dao.StopDAO;
 import br.com.senac.findbus.model.StopED;
 import android.app.Activity;
