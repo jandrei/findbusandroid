@@ -63,6 +63,19 @@ public class StopDAO extends CustomDAO<StopED> {
 		return obj;
 	}
 
+	@Override
+	public String getFiltroListar(StopED obj) {
+		String filtro = "";
+		if (obj.getStopId() != null) {
+			filtro += " and stop_id = " + obj.getStopId();
+		}
+		if (obj.getStopName() != null) {
+			filtro += " and lower(stop_name) like '%" + obj.getStopName().toLowerCase()+"%'";
+		}
+
+		return filtro;
+	}
+
 	public void importarFromWS(Context ctx) {
 		try {
 			if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -70,18 +83,21 @@ public class StopDAO extends CustomDAO<StopED> {
 				StrictMode.setThreadPolicy(policy);
 			}
 
-			List<StopED> stops = listarTodos();
+			StopED pesqStop = new StopED();
+			
+			
+			List<StopED> stops = listar(pesqStop);
 
 			if (stops == null || stops.isEmpty()) {
-				String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
-				stops = importarListaJson(resposta);
+				//String resposta = new SynchronousHttpConnection().get(Constantes.urlAmazon + Constantes.Stop.urlStop);
+				//stops = importarListaJson(resposta);
 			}
-			
+
 			String mensagem = "";
 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 10 && i < stops.size(); i++) {
 				StopED ed = stops.get(i);
-				mensagem += ed.getStopId() + "|" + ed.getStopLat() + "|" + ed.getStopLon() + "\n";
+				mensagem += ed.getStopId() + "|" + ed.getStopId() + "|" + ed.getStopName() + "\n";
 			}
 
 			Mensagens.ExibeMensagemAlert(ctx, "Tamanho da lista = " + stops.size() + "\n" + mensagem);

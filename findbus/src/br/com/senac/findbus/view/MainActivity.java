@@ -62,4 +62,8 @@ public class MainActivity extends Activity {
 		}
 
 	}
+	
+	public void btnChamaTelaPesquisaStops(View v){
+		startActivity(new Intent(this,PesquisaStops.class));
+	}
 }

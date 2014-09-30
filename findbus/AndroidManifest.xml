@@ -50,6 +50,9 @@
         <activity
             android:name="br.com.senac.findbus.view.ExemploTela1"
             android:label="Exemplo de tela 1" />
+        <activity
+            android:name="br.com.senac.findbus.view.PesquisaStops"
+            android:label="Pesquisa Stops" />
     </application>
 
 </manifest>

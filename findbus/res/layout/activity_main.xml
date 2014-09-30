@@ -10,9 +10,9 @@
     tools:context="br.com.senac.findbus.view.MainActivity" >
 
     <LinearLayout
+        style="@style/cima"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/cima">
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/texto"
@@ -34,15 +34,27 @@
     </LinearLayout>
 
     <LinearLayout
+        style="@style/cima"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/cima">
+        android:layout_height="wrap_content" >
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:onClick="btnChamaTelaExemplo1"
             android:text="@string/telaExemploMapa1" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/cima"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="btnChamaTelaPesquisaStops"
+            android:text="@string/telaPesquisaStops" />
     </LinearLayout>
 
 </LinearLayout>

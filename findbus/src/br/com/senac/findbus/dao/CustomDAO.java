@@ -86,10 +86,22 @@ public abstract class CustomDAO<T extends CustomED> {
 			c.close(); // fecho o cursor
 		}
 	}
+	
+	public String getFiltroListar(T obj){
+		return "";
+	}
 
-	public List<T> listar(String filtro) {
-		Cursor c = db.query(getNomeTabela(), null, "stopId = '" + filtro
-				+ "'", null, null, null, null);
+	public List<T> listar(T obj) {
+		
+		String filtro = " 1=1 ";
+		if (obj != null ){
+			if (obj.getSequenceAndroid() != null){
+				filtro = " and sequence_android="+obj.getSequenceAndroid();
+			}
+			filtro += getFiltroListar(obj);
+		}
+		
+		Cursor c = db.query(getNomeTabela(), null, filtro, null, null, null, null);
 		try {
 
 			List<T> lista = new ArrayList<T>();

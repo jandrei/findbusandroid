@@ -5,6 +5,8 @@
     <string name="ache_bus">Ache seu ônibus aqui!</string>
     <string name="action_settings">Settings</string>
     <string name="vai">VAI</string>   
-    <string name="telaExemploMapa1">Tela de exemplo mapa</string> 
+    <string name="telaExemploMapa1">Tela de exemplo mapa</string>
+    <string name="telaPesquisaStops">Tela pesquisa Stops</string>
+     
 
 </resources>
