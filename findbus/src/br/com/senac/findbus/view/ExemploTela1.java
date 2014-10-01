@@ -12,7 +12,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ExemploTela1 extends FragmentActivity {
 
@@ -29,11 +31,11 @@ public class ExemploTela1 extends FragmentActivity {
 
 				if (ed != null) {
 					GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-					LatLng latLng = new LatLng(ed.getStopLat(),ed.getStopLon());
-					configuraPosicao(map, latLng);
-					
+					LatLng latLng = new LatLng(ed.getStopLat(), ed.getStopLon());
+					configuraPosicao(map, latLng, ed);
+
 					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!! = " + ed.getStopId());
-					
+
 				} else {
 					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!!");
 
@@ -49,7 +51,9 @@ public class ExemploTela1 extends FragmentActivity {
 		}
 	}
 
-	private void configuraPosicao(GoogleMap map, LatLng latLng) {
+	private void configuraPosicao(GoogleMap map, LatLng latLng, StopED ed) {
+		map.addMarker(new MarkerOptions().position(latLng).title(ed.getStopId() + "-" + ed.getStopName() + " (" + ed.getStopLat() + "," + ed.getStopLon() + ")").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
 		map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17.0f));
 	}
