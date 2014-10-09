@@ -596,8 +596,6 @@ containing a value of this type.
     
          */
         public static final int WalletFragmentDefaultStyle=0x7f040004;
-        /**          <item name="android:background">#1b4f8f</item> 
-         */
         public static final int fundoPadrao=0x7f040007;
     }
     public static final class styleable {

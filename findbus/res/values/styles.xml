@@ -19,7 +19,7 @@
 
     <style name="fundoPadrao">
         <item name="android:textColor">#ffffff</item>
-<!--         <item name="android:background">#1b4f8f</item> -->
+        <item name="android:background">#1b4f8f</item>
     </style>
 
 </resources>

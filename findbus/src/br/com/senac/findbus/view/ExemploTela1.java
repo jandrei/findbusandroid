@@ -1,14 +1,13 @@
 package br.com.senac.findbus.view;
 
+import java.util.List;
+
 import android.app.Dialog;
-import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import br.com.senac.findbus.Mensagens;
 import br.com.senac.findbus.R;
+import br.com.senac.findbus.dao.StopDAO;
 import br.com.senac.findbus.model.StopED;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -30,18 +29,40 @@ public class ExemploTela1 extends FragmentActivity {
 		try {
 			int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
-			if (status != ConnectionResult.SUCCESS) {
+			if (status == ConnectionResult.SUCCESS) {
+
+				StopED ed = (StopED) getIntent().getSerializableExtra("stopED");
+
+				if (ed != null) {
+					GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+					LatLng latLng = new LatLng(ed.getStopLat(), ed.getStopLon());
+					configuraPosicao(map, latLng, ed);
+
+					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!! = " + ed.getStopId());
+
+				} else {
+					StopDAO dao = StopDAO.getInstance(getBaseContext());
+					GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+					ed =new StopED();
+					ed.setStopName("belas");
+					List<StopED> stops = dao.listar(ed);
+					
+					PolylineOptions options = new PolylineOptions();
+					for (StopED stopED : stops) {
+						options.add(new LatLng(stopED.getStopLat(), stopED.getStopLon()));
+					}
+					
+					map.addPolyline(options);
+					
+					
+					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!!");
+
+				}
+
+			} else {
 				int requestCode = 10;
 				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
 				dialog.show();
-			} else {
-				StopED ed = (StopED) getIntent().getSerializableExtra("stopED");
-				GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-				map.setMyLocationEnabled(true);
-				if (ed != null) {
-					LatLng latLng = new LatLng(ed.getStopLat(), ed.getStopLon());
-					configuraPosicao(map, latLng, ed);
-				}
 			}
 		} catch (Exception e) {
 			Mensagens.ExibeExceptionAlert(ExemploTela1.this, e);
@@ -51,7 +72,7 @@ public class ExemploTela1 extends FragmentActivity {
 	private void configuraPosicao(GoogleMap map, LatLng latLng, StopED ed) {
 		map.addMarker(new MarkerOptions().position(latLng).title(ed.getStopId() + "-" + ed.getStopName() + " (" + ed.getStopLat() + "," + ed.getStopLon() + ")").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-		map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+		map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 		map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17.0f));
 	}
 }
