@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import br.com.senac.findbus.Mensagens;
 import br.com.senac.findbus.R;
+import br.com.senac.findbus.dao.RouteDAO;
 import br.com.senac.findbus.dao.StopDAO;
 
 public class MainActivity extends Activity {
@@ -21,14 +22,23 @@ public class MainActivity extends Activity {
 
 		final StopDAO stopDao = StopDAO.getInstance(getApplication());
 
-		final TextView texto2 = (TextView) findViewById(R.id.texto2);
-		Button botao = (Button) findViewById(R.id.botao);
+		Button botao = (Button) findViewById(R.id.importacaoStops);
 
 		botao.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				texto2.setText("Ainda em desenvolvimento");
 
 				stopDao.importarFromWS(v.getContext());
+			}
+
+		});
+		
+		
+		final RouteDAO routeDao = RouteDAO.getInstance(getBaseContext());
+		Button importarRotas = (Button) findViewById(R.id.importacaoRoutes);
+
+		importarRotas.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View v) {
+				routeDao.importarFromWS(v.getContext());
 			}
 
 		});
@@ -66,4 +76,9 @@ public class MainActivity extends Activity {
 	public void btnChamaTelaPesquisaStops(View v){
 		startActivity(new Intent(this,PesquisaStops.class));
 	}
+	public void btnChamaTelaPesquisaRoutes(View v){
+		startActivity(new Intent(this,PesquisaRoutes.class));
+	}
+	
+	
 }

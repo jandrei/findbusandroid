@@ -8,11 +8,13 @@ public class Constantes {
 		public static final String urlStop = "/stops";
 	}
 	public static class Route{
-		public static final String urlStop = "/routes";
+		public static final String urlRoute = "/routes";
 	}
 	public static class Agency{
 		public static final String urlStop = "/agencys";
 	}
+	
+	public static final float stopsProximos = 0.001f; 
 	
 
 }

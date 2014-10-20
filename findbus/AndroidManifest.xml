@@ -61,6 +61,9 @@
         <activity
             android:name="br.com.senac.findbus.view.PesquisaStops"
             android:label="Pesquisa Stops" />
-    </application>
+        <activity
+            android:name="br.com.senac.findbus.view.PesquisaRoutes"
+            android:label="Pesquisa Routes" />
+        </application>
 
 </manifest>

@@ -1,11 +1,13 @@
 package br.com.senac.findbus.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.StrictMode;
 import br.com.senac.findbus.Constantes;
 import br.com.senac.findbus.Mensagens;
@@ -70,12 +72,36 @@ public class StopDAO extends CustomDAO<StopED> {
 			filtro += " and stop_id = " + obj.getStopId();
 		}
 		if (obj.getStopName() != null) {
-			filtro += " and lower(stop_name) like '%" + obj.getStopName().toLowerCase()+"%'";
+			filtro += " and lower(stop_name) like '%" + obj.getStopName().toLowerCase() + "%'";
 		}
 
 		return filtro;
 	}
-	
+
+	public List<StopED> listarProximos(Location location) {
+		String filtro = "";
+		double lat = location.getLatitude();
+		double lon = location.getLongitude();
+		double proximidade = Constantes.stopsProximos;
+		
+		filtro += " stop_lon between " + lon + " - " + proximidade + " and " + lon + " + " + proximidade + " ";
+		filtro += " and stop_lat between " + lat + " - " + proximidade + " and " + lat + " + " + proximidade + " ";
+
+		Cursor c = db.query(getNomeTabela(), null, filtro, null, null, null, getOrderBy());
+
+		List<StopED> lista = new ArrayList<StopED>();
+
+		if (c.getCount() == 0)
+			return lista; 
+
+		while (c.moveToNext()) {
+			StopED t = fillObject(c);
+
+			lista.add(t);
+		}
+		return lista;
+	}
+
 	@Override
 	public String getOrderBy() {
 		return "stop_name,stop_id";

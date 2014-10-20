@@ -3,6 +3,8 @@ package br.com.senac.findbus.view;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import br.com.senac.findbus.Mensagens;
@@ -15,10 +17,10 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 public class ExemploTela1 extends FragmentActivity {
 
@@ -30,35 +32,42 @@ public class ExemploTela1 extends FragmentActivity {
 			int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
 			if (status == ConnectionResult.SUCCESS) {
-
+				GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+				map.setMyLocationEnabled(true);
+				
 				StopED ed = (StopED) getIntent().getSerializableExtra("stopED");
 
 				if (ed != null) {
-					GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+					
 					LatLng latLng = new LatLng(ed.getStopLat(), ed.getStopLon());
 					configuraPosicao(map, latLng, ed);
 
-					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!! = " + ed.getStopId());
-
 				} else {
 					StopDAO dao = StopDAO.getInstance(getBaseContext());
-					GoogleMap map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-					ed =new StopED();
-					ed.setStopName("belas");
-					List<StopED> stops = dao.listar(ed);
+					List<StopED> stops = null;
+//					int conta = 5;
+//					
+//					while(conta >= 0){
+//						if (map.getMyLocation() != null){
+//							break;
+//						}
+//						conta--;
+//						Thread.sleep(1000);
+//					}
+					LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
+					stops = dao.listarProximos(locManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+					LatLng ltn = null;
 					
-					PolylineOptions options = new PolylineOptions();
 					for (StopED stopED : stops) {
-						options.add(new LatLng(stopED.getStopLat(), stopED.getStopLon()));
+						ltn = new LatLng(stopED.getStopLat(), stopED.getStopLon());
+						map.addMarker(new MarkerOptions().position(ltn)
+								.title(stopED.getStopName())
+								.icon( BitmapDescriptorFactory.fromResource(R.drawable.bus)));
 					}
-					
-					map.addPolyline(options);
-					
-					
-					Mensagens.ExibeMensagemAlert(ExemploTela1.this, "Sucess!!");
-
+					if (stops.size()>0){
+						map.animateCamera(CameraUpdateFactory.newLatLngZoom(ltn, 17.0f));
+					}
 				}
-
 			} else {
 				int requestCode = 10;
 				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
